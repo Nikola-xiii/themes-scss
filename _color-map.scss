@@ -6,6 +6,23 @@ $project-colors: (
   'background': #e9e9e9
 );
 
+$project-opacity: (
+  'light': 0.8, // opacity used with lighter colors
+  'dark': 0.4   // opacity used with darker colors
+);
+
 @function project-color($key: 'primary') {
   @return map-get($project-colors, $key);
+}
+
+@function project-color-alpha($name: 'primary', $opacity: 0) {
+  $color: project-color($name);
+
+  // Get the named opacity level, if it exists
+  @if map-key-exists($project-opacity, $opacity) {
+    $opacity: map-get($project-opacity, $opacity);
+  }
+
+  // Use rgba() to manipulate the color's alpha level
+  @return rgba($color, $opacity);
 }
